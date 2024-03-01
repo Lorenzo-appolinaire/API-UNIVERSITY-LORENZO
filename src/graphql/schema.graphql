@@ -1,0 +1,39 @@
+type Role {
+  id: ID!
+  name: String!
+  description: String
+}
+
+type User {
+  id: ID!
+  username: String!
+  email: String!
+  roles: [Role!]!
+}
+
+type Session {
+  id: ID!
+  userId: ID!
+  startTime: String!
+  endTime: String
+}
+
+type Query {
+  getSession(sessionId: ID!): Session
+  getUserSessions(userId: ID!): [Session!]!
+}
+
+type Mutation {
+  createRole(name: String!, description: String): Role!
+  editRole(id: ID!, name: String!, description: String): Role!
+  deleteRole(id: ID!): Role
+
+  createUser(username: String!, email: String!): User!
+  editUser(id: ID!, username: String!, email: String!): User!
+  deleteUser(id: ID): User
+  createUserSession(userId: ID!, startTime: String!, endTime: String): Session!
+  deleteSession(sessionId: ID!): Session
+
+  getSessionDataWithoutUser(sessionId: ID!): Session
+  getSessionDataWithUserAndRoles(sessionId: ID!): Session
+}
